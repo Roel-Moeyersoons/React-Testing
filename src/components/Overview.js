@@ -5,7 +5,7 @@ class Overview extends Component {
 
     render(){
         let laden = <h1>Laden...</h1>;
-        if(this.props.tabs){
+        if(this.props.tabs.length){
             laden = <TabList tabs={this.props.tabs} />;
         }
         return (
