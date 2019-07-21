@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import TabsRepo from '../data/Repo.ts'
+import TabsRepo from './data/Repo.ts'
 
 export const MyContext = React.createContext();
 
@@ -8,14 +8,15 @@ export class MyProvider extends Component {
 		super(props);
 		this.state = {
 			repository: new TabsRepo('http://server.magnias.be:3000/tabs', 10*60*1000),
-			data: "lol"
 		}
 	}
 
 	render() {
 		return (
 			<MyContext.Provider value={{
-				state: this.state
+				state: this.state,
+				getTabs : () => {return this.state.repository.getTabs()},
+				findTab: (id) => {return this.state.repository.getItem(id)}
 			}}>
 				{this.props.children}
 			</MyContext.Provider>

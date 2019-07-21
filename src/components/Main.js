@@ -4,20 +4,18 @@ import Overview from './Overview';
 import Title from './Title';
 import About from './About';
 import Details from './Details';
-import TabsRepo from '../data/Repo.ts'
+import { MyContext } from '../context/MyProvider';
 
 class Main extends Component{
-
-    Repository
-
-    constructor(props){
+    constructor(props, context){
         super(props);
         this.state = { tabs: [] };
-
-        this.Repository = new TabsRepo('http://server.magnias.be:3000/tabs', 10*60*1000);
-        this.Repository.getTabs().then(tabs => { this.setState({ tabs }); })
+        
     }
 
+    componentDidMount(){
+        this.context.getTabs().then(tabs => { this.setState({ tabs }); });
+    }
 
     render(){
         return (       
@@ -33,5 +31,6 @@ class Main extends Component{
     }
 }
 
+Main.contextType = MyContext;
 
 export default Main;

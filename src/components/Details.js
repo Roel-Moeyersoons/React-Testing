@@ -2,14 +2,21 @@ import React, { Component, Fragment } from "react";
 import { MyContext } from '../context/MyProvider';
 
 class Details extends Component {
-    constructor(props){
+
+    _isMounted = false;
+
+    constructor(props, context){
         super(props);
         this.state = { item: {} };
+        context.findTab(this.props.match.params.tabId)
+            .then( tab => {
+                if(this._isMounted)
+                    this.setState({item : tab})
+            });
     }
 
     componentDidMount(){
-        this.props.repo.getItem(this.props.match.params.tabId)
-            .then( tab => this.setState({item : tab}));
+        this._isMounted = true;
     }
 
     render(){
@@ -17,20 +24,19 @@ class Details extends Component {
         if(this.state.item){
             songnaam = this.state.item.song;
         }
-        /*return (
-                <MyContext.Consumer>
-                    {(context) => (
-                        <Fragment>
-                            <h1>Het werkt</h1>
-                            <h2>song: {context.state.data}</h2>
-                        </Fragment>
-                    )}                  
-                </MyContext.Consumer>
-        );*/
-        return <h1>{this.context.state.data}</h1>
+        return (
+            <Fragment>
+                <h1>Het werkt</h1>
+                <h2>song: {songnaam}</h2>
+            </Fragment>
+        );
+    }
+
+    componentWillUnmount = () => {
+        this._isMounted = false;
     }
 }
 
-Details.contextType = MyContext
+Details.contextType = MyContext;
 
 export default Details;
