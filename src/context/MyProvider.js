@@ -22,8 +22,8 @@ export class MyProvider extends Component {
 					getTabs: () => {
 						return this.state.repository.getTabs();
 					},
-					findTab: id => {
-						return this.state.repository.getItem(id);
+					getTabDetails: id => {
+						return this.state.repository.getDetails(id);
 					}
 				}}
 			>
