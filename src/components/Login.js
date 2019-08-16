@@ -18,7 +18,10 @@ class Login extends Component {
 		}
 		return (
 			<Fragment>
-				<form className="container">
+				<form
+					className="container-fluid"
+					//onSubmit={() => this.submit()}
+				>
 					<div className="form-group row">
 						<label>name: </label>
 						<input
@@ -47,6 +50,7 @@ class Login extends Component {
 						onClick={() => this.submit()}
 						value="Log in"
 					/>
+					<hr />
 					{this.state.wrongCred && (
 						<div className="alert alert-danger row">
 							Wrong Credentials

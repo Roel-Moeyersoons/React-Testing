@@ -5,7 +5,7 @@ import TabList from "./TabList";
 class Overview extends Component {
 	constructor(props, context) {
 		super(props);
-		this.state = { tabs: [] };
+		this.state = { tabs: [], favorites: [] };
 		context.getTabs().then(res => {
 			this.setState({ tabs: res });
 			//console.log(res);
@@ -17,7 +17,13 @@ class Overview extends Component {
 		if (this.state.tabs.length) {
 			laden = <TabList tabs={this.state.tabs} />;
 		}
-		return <Fragment>{laden}</Fragment>;
+		return (
+			<Fragment>
+				<h2>All tabs</h2>
+				<br />
+				{laden}
+			</Fragment>
+		);
 	}
 }
 

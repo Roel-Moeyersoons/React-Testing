@@ -5,6 +5,7 @@ import Title from "./Title";
 import About from "./About";
 import Details from "./Details";
 import Login from "./Login";
+import Favorites from "./Favorites";
 import { MyContext } from "../context/MyProvider";
 
 class Main extends Component {
@@ -23,6 +24,7 @@ class Main extends Component {
 						path="/tab/:tabId"
 						component={props => <Details {...props} />}
 					/>
+					<Route exact path="/favorites" component={Favorites} />
 					<Route exact path="/login" component={Login} />
 				</Router>
 			</div>

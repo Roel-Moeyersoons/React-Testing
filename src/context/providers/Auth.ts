@@ -1,10 +1,14 @@
 import Axios from "axios";
 
 class Auth {
-	token: String = "";
+	token: string = "";
 	authPromise: Promise<boolean> | null = null;
 
 	subscribers: Array<any> = [];
+
+	get Token(): string {
+		return this.token;
+	}
 
 	constructor(private url: string) {
 		let user = localStorage.getItem("user");
@@ -24,7 +28,7 @@ class Auth {
 			localStorage.setItem("pwd", pwd);
 
 			this.token = res.data.token;
-			console.log(this.token);
+			//console.log(this.token);
 			return true;
 		} catch {
 			this.logOut();
@@ -37,7 +41,7 @@ class Auth {
 	}
 
 	isAuthenticated() {
-		console.log(this.token);
+		//console.log(this.token);
 		return this.token !== "";
 	}
 
@@ -50,6 +54,7 @@ class Auth {
 		localStorage.setItem("user", "");
 		localStorage.setItem("pwd", "");
 		this.token = "";
+		this.warn();
 	}
 
 	subscribe(item: any) {
@@ -57,6 +62,10 @@ class Auth {
 			if (it === item) return;
 		});
 		this.subscribers.push(item);
+	}
+
+	unsubscribe(item: any) {
+		this.subscribers = this.subscribers.filter(i => item !== i);
 	}
 
 	private warn() {

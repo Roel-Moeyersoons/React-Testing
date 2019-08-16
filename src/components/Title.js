@@ -25,7 +25,7 @@ class Title extends React.Component {
 	}
 
 	render() {
-		console.log(this.state.loggedIn);
+		console.log("Authenticated? " + this.state.loggedIn);
 		let loginNav = (
 			<button
 				className="btn btn-danger navbar-btn"
@@ -49,8 +49,13 @@ class Title extends React.Component {
 				style={{ paddingBottom: "1em", fontSize: "20px" }}
 			>
 				<Link to="/" className="nav-link">
-					List
+					All Tabs
 				</Link>
+				{this.state.loggedIn && (
+					<Link to="/favorites" className="nav-link">
+						Favorites
+					</Link>
+				)}
 				<Link to="/about" className="nav-link">
 					About
 				</Link>
