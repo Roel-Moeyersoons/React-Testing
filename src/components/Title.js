@@ -8,13 +8,22 @@ class Title extends React.Component {
 		this.state = {
 			loggedIn: context.auth.isAuthenticated()
 		};
+		context.auth.subscribe(this);
+	}
+
+	/* componentDidMount() {
 		setInterval(() => {
-			if (this.state.loggedIn !== context.auth.isAuthenticated())
+			if (this.state.loggedIn !== this.context.auth.isAuthenticated())
 				this.setState({
-					loggedIn: context.auth.isAuthenticated()
+					loggedIn: this.context.auth.isAuthenticated()
 				});
 		}, 1000);
+	} */
+
+	update() {
+		this.setState({ loggedIn: this.context.auth.isAuthenticated() });
 	}
+
 	render() {
 		console.log(this.state.loggedIn);
 		let loginNav = (

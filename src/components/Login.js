@@ -7,7 +7,8 @@ class Login extends Component {
 		this.state = {
 			name: "",
 			pwd: "",
-			redirect: context.auth.isAuthenticated()
+			redirect: context.auth.isAuthenticated(),
+			wrongCred: false
 		};
 	}
 
@@ -18,7 +19,7 @@ class Login extends Component {
 		return (
 			<Fragment>
 				<form className="container">
-					<div className="form-group">
+					<div className="form-group row">
 						<label>name: </label>
 						<input
 							type="text"
@@ -29,7 +30,7 @@ class Login extends Component {
 							}}
 						/>
 					</div>
-					<div className="form-group">
+					<div className="form-group row">
 						<label>password: </label>
 						<input
 							type="text"
@@ -42,10 +43,15 @@ class Login extends Component {
 					</div>
 					<input
 						type="button"
-						className="btn btn-primary"
+						className="btn btn-primary col-md-1 row"
 						onClick={() => this.submit()}
 						value="Log in"
 					/>
+					{this.state.wrongCred && (
+						<div className="alert alert-danger row">
+							Wrong Credentials
+						</div>
+					)}
 				</form>
 			</Fragment>
 		);
@@ -54,7 +60,8 @@ class Login extends Component {
 	submit() {
 		this.context.auth.logIn(this.state.name, this.state.pwd).then(res => {
 			this.setState({
-				redirect: this.context.auth.isAuthenticated()
+				redirect: res,
+				wrongCred: !res
 			});
 		});
 	}

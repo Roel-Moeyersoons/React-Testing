@@ -4,6 +4,8 @@ class Auth {
 	token: String = "";
 	authPromise: Promise<boolean> | null = null;
 
+	subscribers: Array<any> = [];
+
 	constructor(private url: string) {
 		let user = localStorage.getItem("user");
 		if (user && user !== "") {
@@ -30,6 +32,7 @@ class Auth {
 			return false;
 		} finally {
 			this.authPromise = null;
+			this.warn();
 		}
 	}
 
@@ -47,6 +50,19 @@ class Auth {
 		localStorage.setItem("user", "");
 		localStorage.setItem("pwd", "");
 		this.token = "";
+	}
+
+	subscribe(item: any) {
+		this.subscribers.forEach(it => {
+			if (it === item) return;
+		});
+		this.subscribers.push(item);
+	}
+
+	private warn() {
+		this.subscribers.forEach(it => {
+			it.update();
+		});
 	}
 }
 
