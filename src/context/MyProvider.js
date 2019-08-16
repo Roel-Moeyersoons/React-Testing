@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import TabsRepo from "./data/Repo.ts";
+import TabsRepo from "./providers/Repo.ts";
+import Auth from "./providers/Auth.ts";
 
 export const MyContext = React.createContext();
 
@@ -8,9 +9,10 @@ export class MyProvider extends Component {
 		super(props);
 		this.state = {
 			repository: new TabsRepo(
-				"http://server.magnias.be:3000/tabs",
+				`${process.env.REACT_APP_SITE}/tabs`,
 				10 * 60 * 1000
-			)
+			),
+			auth: new Auth(`${process.env.REACT_APP_SITE}/user`)
 		};
 	}
 
@@ -24,7 +26,8 @@ export class MyProvider extends Component {
 					},
 					getTabDetails: id => {
 						return this.state.repository.getDetails(id);
-					}
+					},
+					auth: this.state.auth
 				}}
 			>
 				{this.props.children}

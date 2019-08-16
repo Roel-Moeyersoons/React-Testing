@@ -1,5 +1,4 @@
 import Axios from "axios";
-import { async, timeout } from "q";
 
 interface DetailWrapper {
 	data: any;
@@ -13,6 +12,7 @@ class Cache {
 	detailedTabsData: Map<string, DetailWrapper>;
 
 	constructor(private dataSource: string, private renewTime: number) {
+		//console.log(this.dataSource);
 		this.tabsData = [];
 		this.tabsFetchedDate = new Date();
 		this.tabsFetchedDate.setTime(0);

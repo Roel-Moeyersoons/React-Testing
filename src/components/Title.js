@@ -1,13 +1,61 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React from "react";
+import { MyContext } from "../context/MyProvider";
+import { Link } from "react-router-dom";
 
-let Title = (props) => {
-    return (
-        <nav className="nav" style={{ paddingBottom: "1em", fontSize: "20px"}}>
-            <Link to="/" className="nav-link">List</Link>
-            <Link to="/about" className="nav-link">About</Link>
-        </nav>
-    );
+class Title extends React.Component {
+	constructor(props, context) {
+		super(props);
+		this.state = {
+			loggedIn: context.auth.isAuthenticated()
+		};
+		setInterval(() => {
+			if (this.state.loggedIn !== context.auth.isAuthenticated())
+				this.setState({
+					loggedIn: context.auth.isAuthenticated()
+				});
+		}, 1000);
+	}
+	render() {
+		console.log(this.state.loggedIn);
+		let loginNav = (
+			<button
+				className="btn btn-danger navbar-btn"
+				onClick={() => {
+					this.logOut();
+				}}
+			>
+				Log out
+			</button>
+		);
+		if (!this.state.loggedIn) {
+			loginNav = (
+				<Link to="/login" className="nav-link">
+					Log in
+				</Link>
+			);
+		}
+		return (
+			<nav
+				className="nav"
+				style={{ paddingBottom: "1em", fontSize: "20px" }}
+			>
+				<Link to="/" className="nav-link">
+					List
+				</Link>
+				<Link to="/about" className="nav-link">
+					About
+				</Link>
+				{loginNav}
+			</nav>
+		);
+	}
+
+	logOut() {
+		console.log("logging out");
+		this.context.auth.logOut();
+		this.setState({ loggedIn: false });
+	}
 }
 
+Title.contextType = MyContext;
 export default Title;
